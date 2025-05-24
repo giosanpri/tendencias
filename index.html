@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infografía de Tendencias de la Industria e Investigación de Mercado</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.plot.ly/plotly-2.32.0.min.js" charset="utf-8"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F3F4F6;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .material-card {
+            background-color: #FFFFFF;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .section-title {
+            font-size: 1.875rem;
+            font-weight: 600;
+            color: #14B8A6;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        .subsection-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #F97316;
+            margin-bottom: 0.75rem;
+        }
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #14B8A6;
+        }
+        .stat-label {
+            font-size: 1rem;
+            color: #4B5563;
+        }
+        .content-text {
+            color: #1F2937;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        .kpi-card {
+            background-color: #FFFFFF;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            padding: 1rem;
+            text-align: center;
+        }
+        .flowchart-step {
+            background-color: #E0F2F7;
+            border: 2px solid #14B8A6;
+            color: #075985;
+            padding: 1rem;
+            border-radius: 0.375rem;
+            text-align: center;
+            font-weight: 500;
+        }
+        .flowchart-arrow {
+            font-size: 1.5rem;
+            color: #14B8A6;
+            margin: 0 0.5rem;
+            align-self: center;
+        }
+        .swot-quadrant {
+            border: 1px solid #D1D5DB;
+            padding: 1rem;
+            border-radius: 0.375rem;
+            min-height: 150px;
+        }
+        .swot-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 1.125rem;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <header class="bg-emerald-500 text-white p-6 shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto text-center">
+            <h1 class="text-4xl font-bold">Tendencias de la Industria e Investigación de Mercado</h1>
+            <p class="text-lg opacity-90">Análisis en Profundidad (Datos de Ejemplo)</p>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4 md:p-8">
+
+        <section id="introduction" class="material-card text-center">
+            <h2 class="section-title">El Pulso del Mercado</h2>
+            <p class="content-text max-w-2xl mx-auto">
+                Comprender las tendencias actuales de la industria y la dinámica del mercado es crucial para la toma de decisiones estratégicas y el crecimiento sostenible. Este informe proporciona una instantánea de métricas clave, patrones emergentes y perspectivas futuras basadas en una investigación exhaustiva (de ejemplo).
+            </p>
+            <div class="mt-6">
+                <div class="stat-number">15%</div>
+                <div class="stat-label">Crecimiento Anual Proyectado del Mercado (CAGR)</div>
+                <p class="text-xs text-gray-500 mt-1">(Promedio Global Ilustrativo)</p>
+            </div>
+        </section>
+
+        <section id="market-overview" class="material-card">
+            <h2 class="section-title">Visión General del Mercado</h2>
+            <p class="content-text text-center max-w-2xl mx-auto mb-8">
+                Una mirada al tamaño actual del mercado, su trayectoria de crecimiento proyectada y la distribución de la cuota de mercado entre los principales actores. Estos indicadores proporcionan una comprensión fundamental de la escala y la intensidad competitiva de la industria.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <div>
+                    <h3 class="subsection-title text-center md:text-left">Tamaño y Crecimiento del Mercado (Miles de Millones de USD)</h3>
+                    <p class="content-text text-sm text-center md:text-left mb-4">Los datos históricos y las proyecciones futuras indican una tendencia constante al alza en la valoración del mercado.</p>
+                    <div class="chart-container h-72 md:h-96 max-w-full">
+                        <canvas id="marketSizeChart"></canvas>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="subsection-title text-center md:text-left">Distribución de la Cuota de Mercado (2024)</h3>
+                    <p class="content-text text-sm text-center md:text-left mb-4">Una instantánea de cómo se divide el mercado entre los principales competidores.</p>
+                    <div class="chart-container h-72 md:h-96 max-w-xs md:max-w-sm">
+                        <canvas id="marketShareChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="key-trends" class="material-card">
+            <h2 class="section-title">Tendencias Clave que Moldean la Industria</h2>
+            <p class="content-text text-center max-w-2xl mx-auto mb-8">
+                Identificar y comprender las tendencias clave es primordial. Esta sección destaca las adopciones tecnológicas significativas y los cambios en el comportamiento del consumidor que actualmente influyen en el panorama del mercado.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                <div>
+                    <h3 class="subsection-title">Tasas de Adopción Tecnológica</h3>
+                    <p class="content-text text-sm mb-4">La adopción de nuevas tecnologías es un motor principal de la innovación y la ventaja competitiva.</p>
+                    <div class="chart-container h-80 md:h-96 max-w-full">
+                        <canvas id="techAdoptionChart"></canvas>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="subsection-title">Cambio en las Preferencias del Consumidor</h3>
+                    <p class="content-text text-sm mb-4">Las demandas cambiantes de los consumidores están redefiniendo el desarrollo de productos y la prestación de servicios.</p>
+                    <div class="bg-gray-50 p-4 rounded-lg shadow">
+                        <div class="flex flex-col space-y-4 items-center">
+                            <div class="flowchart-step w-full md:w-3/4">Modelo Tradicional: Enfoque en Características del Producto</div>
+                            <div class="flowchart-arrow transform rotate-90 md:rotate-0">➔</div>
+                            <div class="flowchart-step w-full md:w-3/4">Modelo Emergente: Enfoque en Experiencia de Usuario y Sostenibilidad</div>
+                            <div class="flowchart-arrow transform rotate-90 md:rotate-0">➔</div>
+                            <div class="flowchart-step w-full md:w-3/4">Futuro: Hiper-Personalización y Abastecimiento Ético</div>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-3 text-center">Este flujo simplificado ilustra una tendencia general hacia expectativas de consumo más orientadas al valor y personalizadas.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="competitive-landscape" class="material-card">
+            <h2 class="section-title">Panorama Competitivo</h2>
+            <p class="content-text text-center max-w-2xl mx-auto mb-8">
+                Un análisis del entorno competitivo, incluyendo el posicionamiento de los principales actores y un análisis DAFO general para la industria.
+            </p>
+            <div>
+                <h3 class="subsection-title">Instantánea de Actores Clave</h3>
+                <p class="content-text text-sm mb-4">Una breve descripción de las empresas líderes y su influencia estimada en el mercado. (Ilustrativo)</p>
+                <div class="overflow-x-auto bg-white rounded-lg shadow mb-8">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Empresa</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fortaleza Principal</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Influencia Est. en el Mercado</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Innovate Corp</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Liderazgo en I+D</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Alta</td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Global Solutions Ltd.</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Distribución Extensa</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Alta</td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">NextGen Tech Inc.</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Desarrollo Ágil de Productos</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Media</td>
+                            </tr>
+                             <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Market Disruptors Co.</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Especialización de Nicho</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Creciente</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div>
+                <h3 class="subsection-title">Análisis DAFO de la Industria (General)</h3>
+                <p class="content-text text-sm mb-4">Una visión general de las Fortalezas, Oportunidades, Debilidades y Amenazas de la industria.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="swot-quadrant bg-green-50">
+                        <h4 class="swot-title text-green-700">Fortalezas 💪</h4>
+                        <ul class="list-disc list-inside text-sm text-green-600 space-y-1">
+                            <li>Fuerte cartera de innovación</li>
+                            <li>Creciente demanda global</li>
+                            <li>Disponibilidad de mano de obra cualificada</li>
+                        </ul>
+                    </div>
+                    <div class="swot-quadrant bg-red-50">
+                        <h4 class="swot-title text-red-700">Debilidades 📉</h4>
+                        <ul class="list-disc list-inside text-sm text-red-600 space-y-1">
+                            <li>Altos costos de I+D</li>
+                            <li>Marco regulatorio complejo</li>
+                            <li>Dependencia de las cadenas de suministro</li>
+                        </ul>
+                    </div>
+                    <div class="swot-quadrant bg-blue-50">
+                        <h4 class="swot-title text-blue-700">Oportunidades 🚀</h4>
+                        <ul class="list-disc list-inside text-sm text-blue-600 space-y-1">
+                            <li>Expansión a mercados emergentes</li>
+                            <li>Integración de nuevas tecnologías (IA, IoT)</li>
+                            <li>Asociaciones estratégicas</li>
+                        </ul>
+                    </div>
+                    <div class="swot-quadrant bg-yellow-50">
+                        <h4 class="swot-title text-yellow-700">Amenazas ⚠️</h4>
+                        <ul class="list-disc list-inside text-sm text-yellow-600 space-y-1">
+                            <li>Intensa competencia de precios</li>
+                            <li>Rápida obsolescencia tecnológica</li>
+                            <li>Incertidumbres geopolíticas</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="future-outlook" class="material-card">
+            <h2 class="section-title">Perspectivas Futuras y Oportunidades</h2>
+            <p class="content-text text-center max-w-2xl mx-auto mb-8">
+                Proyectando hacia adelante, esta sección explora posibles segmentos de alto crecimiento y oportunidades emergentes que podrían definir el futuro de la industria.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                <div>
+                    <h3 class="subsection-title">Segmentos de Alto Crecimiento Potencial</h3>
+                    <p class="content-text text-sm mb-4">Identificación de segmentos con el mayor potencial de crecimiento basados en las tendencias actuales y los patrones de inversión.</p>
+                    <div class="chart-container h-80 md:h-96 max-w-full">
+                        <canvas id="growthSegmentsChart"></canvas>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="subsection-title">Oportunidades Emergentes</h3>
+                    <p class="content-text text-sm mb-4">Áreas clave donde es probable que prosperen nuevas empresas e innovaciones.</p>
+                    <ul class="list-disc list-inside space-y-2 bg-gray-50 p-4 rounded-lg shadow">
+                        <li class="text-gray-700"><span class="font-semibold text-emerald-600">Soluciones Sostenibles:</span> Creciente demanda de productos y procesos ecológicos.</li>
+                        <li class="text-gray-700"><span class="font-semibold text-emerald-600">Análisis Impulsado por IA:</span> Aprovechamiento de la inteligencia artificial para obtener información más profunda del mercado y automatización.</li>
+                        <li class="text-gray-700"><span class="font-semibold text-emerald-600">Servicios Personalizados:</span> Adaptación de las ofertas a las necesidades individuales del cliente a escala.</li>
+                        <li class="text-gray-700"><span class="font-semibold text-emerald-600">Tecnologías Descentralizadas:</span> Exploración de blockchain y tecnologías relacionadas para nuevos modelos de negocio.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="conclusion" class="material-card text-center">
+            <h2 class="section-title">Conclusiones</h2>
+            <p class="content-text max-w-2xl mx-auto">
+                La industria está preparada para una evolución continua, impulsada por los avances tecnológicos y las cambiantes expectativas de los consumidores. La agilidad, la innovación y un enfoque centrado en el cliente serán clave para navegar por el panorama dinámico y capitalizar las oportunidades emergentes. Este informe sirve como una guía fundamental para comprender estos elementos críticos.
+            </p>
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 text-white text-center p-6 mt-8">
+        <p class="text-sm">&copy; <span id="currentYear"></span> Market Research Insights Inc. Todos los derechos reservados.</p>
+        <p class="text-xs opacity-70">Los datos presentados son ilustrativos y solo para fines de demostración. Basado en el "Informe de Investigación en Profundidad" de ejemplo.</p>
+    </footer>
+
+    <script>
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        function wrapLabels(label, maxWidth) {
+            const words = label.split(' ');
+            let currentLine = '';
+            const lines = [];
+            for (const word of words) {
+                if ((currentLine + word).length > maxWidth && currentLine.length > 0) {
+                    lines.push(currentLine.trim());
+                    currentLine = '';
+                }
+                currentLine += word + ' ';
+            }
+            if (currentLine.length > 0) {
+                lines.push(currentLine.trim());
+            }
+            return lines.length > 0 ? lines : [label];
+        }
+        
+        const chartJsTooltipConfig = {
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        title: function(tooltipItems) {
+                            const item = tooltipItems[0];
+                            let label = item.chart.data.labels[item.dataIndex];
+                            if (Array.isArray(label)) {
+                              return label.join(' ');
+                            } else {
+                              return label;
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        const primaryColor = '#14B8A6';
+        const secondaryColor = '#F97316';
+        const accentColor = '#FACC15';
+        const grayColor = '#6B7280';
+        const lightGrayColor = '#D1D5DB';
+
+        const marketSizeCtx = document.getElementById('marketSizeChart').getContext('2d');
+        new Chart(marketSizeCtx, {
+            type: 'line',
+            data: {
+                labels: ['2020', '2021', '2022', '2023', '2024 (Est.)', '2025 (Proy.)', '2026 (Proy.)'],
+                datasets: [{
+                    label: 'Tamaño del Mercado (Miles de Millones de USD)',
+                    data: [120, 135, 155, 180, 210, 245, 280],
+                    borderColor: primaryColor,
+                    backgroundColor: primaryColor + '33',
+                    fill: true,
+                    tension: 0.3
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: { beginAtZero: false, grid: { color: lightGrayColor } },
+                    x: { grid: { display: false } }
+                },
+                ...chartJsTooltipConfig
+            }
+        });
+
+        const marketShareCtx = document.getElementById('marketShareChart').getContext('2d');
+        new Chart(marketShareCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Innovate Corp', 'Global Solutions Ltd.', 'NextGen Tech Inc.', 'Otros Competidores'],
+                datasets: [{
+                    label: 'Cuota de Mercado',
+                    data: [35, 30, 20, 15],
+                    backgroundColor: [primaryColor, secondaryColor, accentColor, grayColor],
+                    borderColor: '#FFFFFF',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom' },
+                     tooltip: {
+                        callbacks: {
+                            title: function(tooltipItems) {
+                                return tooltipItems[0].label;
+                            },
+                            label: function(context) {
+                                let label = context.dataset.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed !== null) {
+                                    label += context.parsed + '%';
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        const techAdoptionCtx = document.getElementById('techAdoptionChart').getContext('2d');
+        const rawTechLabels = ['Inteligencia Artificial en Productos', 'Infraestructura de Computación en la Nube', 'Servicios de Integración de Dispositivos IoT', 'Blockchain para Gestión de Cadena de Suministro', 'Plataformas Avanzadas de Análisis de Datos'];
+        new Chart(techAdoptionCtx, {
+            type: 'bar',
+            data: {
+                labels: rawTechLabels.map(label => wrapLabels(label, 16)),
+                datasets: [{
+                    label: 'Tasa de Adopción (%)',
+                    data: [65, 85, 50, 30, 75],
+                    backgroundColor: [primaryColor, secondaryColor, accentColor, grayColor, primaryColor+'99'],
+                    borderColor: [primaryColor, secondaryColor, accentColor, grayColor, primaryColor+'99'].map(color => color+'CC'),
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                indexAxis: 'y',
+                scales: {
+                    x: { beginAtZero: true, max: 100, grid: { color: lightGrayColor } },
+                    y: { grid: { display: false } }
+                },
+                 ...chartJsTooltipConfig
+            }
+        });
+        
+        const growthSegmentsCtx = document.getElementById('growthSegmentsChart').getContext('2d');
+        new Chart(growthSegmentsCtx, {
+            type: 'bubble',
+            data: {
+                datasets: [{
+                    label: 'Segmento A: Alto Crecimiento, Tamaño Medio',
+                    data: [{ x: 7, y: 15, r: 20 }],
+                    backgroundColor: primaryColor + 'BF',
+                    borderColor: primaryColor
+                }, {
+                    label: 'Segmento B: Crecimiento Medio, Tamaño Grande',
+                    data: [{ x: 12, y: 8, r: 30 }],
+                    backgroundColor: secondaryColor + 'BF',
+                    borderColor: secondaryColor
+                }, {
+                    label: 'Segmento C: Emergente, Alto Potencial',
+                    data: [{ x: 3, y: 20, r: 15 }],
+                    backgroundColor: accentColor + 'BF',
+                    borderColor: accentColor
+                }, {
+                    label: 'Segmento D: Nicho, Crecimiento Estable',
+                    data: [{ x: 5, y: 5, r: 10 }],
+                    backgroundColor: grayColor + 'BF',
+                    borderColor: grayColor
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: { 
+                        title: { display: true, text: 'Índice de Tamaño Relativo del Mercado' },
+                        grid: { color: lightGrayColor }
+                    },
+                    y: { 
+                        title: { display: true, text: 'Tasa de Crecimiento Proyectada (%)' },
+                        grid: { color: lightGrayColor }
+                    }
+                },
+                plugins: {
+                    legend: { position: 'bottom' },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const datasetLabel = context.dataset.label || 'Segmento';
+                                return `${datasetLabel}: (Tamaño: ${context.raw.x}, Crecimiento: ${context.raw.y}%, Inversión: ${context.raw.r})`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+    </script>
+</body>
+</html>
